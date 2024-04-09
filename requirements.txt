@@ -4,3 +4,4 @@ uvicorn
 python-multipart
 aiofiles
 jinja2==3.0.3
+fastapi_utils

@@ -8,6 +8,7 @@ import shutil
 import os
 import hashlib
 from typing import Annotated
+import time
 
 # local imports
 from src.config import config
@@ -41,12 +42,15 @@ async def upload(request: Request, file: UploadFile = File(...)):
     with open(save_path, "wb+") as f:
         shutil.copyfileobj(file.file, f)
         print(f"File {file.filename} saved as {new_filename} in {config.UPLOAD_DIR}")
+    time.sleep(1)
+    print(os.path.getmtime(save_path))
+    print(time.time())
     return templates.TemplateResponse(
         name="main.html", 
         context={
             "request": request,
             'FileResponse': FileResponse(path=save_path, media_type=file.content_type, filename=new_filename),
-            'file_name': file.filename,
+            'file_name': new_filename,
             'content': file.content_type,
             'path': save_path,
             'image_url': f"/upload/{new_filename}"

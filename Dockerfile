@@ -16,5 +16,11 @@ COPY ./website /code/app
 #
 WORKDIR /code/app
 
+#
+RUN pip install 
+
 # 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]
+
+#
+EXPOSE 5000

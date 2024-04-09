@@ -6,6 +6,7 @@ DESCRIPTION: str = 'API voor de website'
 BASE_DIR: str = os.getcwd()
 UPLOAD_DIR: str = os.path.join(BASE_DIR, "upload")
 STATIC_DIR: str = os.path.join(BASE_DIR, "public")
+EXPIRE_TIME: int = 60 * 60 * 24  # 1 day
 
 EXTENTIONS: dict[str, str] = {
     "application/json": "json",
