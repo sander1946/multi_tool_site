@@ -6,8 +6,8 @@
 <body>
     <h1>Image Converter</h1>
     <form id="upload_image" action="./upload" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file" required>
-        <input type="submit" value="Upload">
+        <input type="url" name="video" id="video" placeholder="https://www.youtube.com/watch?v=lSHsZbt0VjY" pattern="https://.*" size="45" required>
+        <input type="submit" value="check_video">
     </form>
     <br>
     {% if image_url %}

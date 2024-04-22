@@ -30,6 +30,7 @@ app.include_router(youtube_main.router)
 
 app.mount('/public', StaticFiles(directory='public'),'public')
 app.mount('/upload', StaticFiles(directory='upload'),'upload')
+app.mount('/static', StaticFiles(directory='src/static'),'static')
 
 templates = Jinja2Templates(directory="src/templates")
 
