@@ -1,12 +1,19 @@
 import os
 
+BASE_DIR: str = os.getcwd()
+if not BASE_DIR.endswith("website"):
+    BASE_DIR = os.path.join(BASE_DIR, "website")
+
 VERSION: str = '0.1.1'
 APP_NAME: str = 'API'
 DESCRIPTION: str = 'API voor de website'
-BASE_DIR: str = os.getcwd()
 UPLOAD_DIR: str = os.path.join(BASE_DIR, "upload")
-STATIC_DIR: str = os.path.join(BASE_DIR, "public")
-EXPIRE_TIME: int = 60 * 60 * 24  # 1 day
+CONVERTED_DIR: str = os.path.join(BASE_DIR, "converted")
+PUBLIC_DIR: str = os.path.join(BASE_DIR, "public")
+STATIC_DIR: str = os.path.join(os.path.join(BASE_DIR, "src"), "static")
+SESSION_DIR = os.path.join(BASE_DIR, "session_data")
+CONVERTED_EXPIRE_TIME: int = 60 * 60 * 24  # 1 day
+UPLOAD_EXPIRE_TIME: int = 60 * 60 * 24 * 15  # 15 days
 
 EXTENTIONS: dict[str, str] = {
     "application/json": "json",

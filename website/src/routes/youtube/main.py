@@ -19,7 +19,7 @@ router = APIRouter(
     tags=["youtube_downloader"],
 )
 
-templates = Jinja2Templates(directory="src/templates/youtube")
+templates = Jinja2Templates(directory=os.path.join(config.BASE_DIR, "src/templates/youtube"))
 
 @router.get("/")
 async def read_item(request: Request):
@@ -29,5 +29,5 @@ async def read_item(request: Request):
 
 @router.get('/download/{file_name}')
 async def download(file_name: str):
-    file_path = os.path.join(config.UPLOAD_DIR, file_name)
+    file_path = os.path.join(config.CONVERTED_DIR, file_name)
     return FileResponse(path=file_path, filename=file_name)

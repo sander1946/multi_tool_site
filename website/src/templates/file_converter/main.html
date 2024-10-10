@@ -7,34 +7,74 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="/static/file_converter.css">
     </head>
     <body>
-        <h1>Image Converter</h1>
-        <form id="upload_image" action="./" method="POST" enctype="multipart/form-data">
-            <div class="mb-3 row">
-                <div class="col-auto">
-                    <input class="form-control" type="file" name="image" value="data.jpg" alccept="image/*" required>
+        <div class="container">
+            <h1 class="my-4">Image Converter</h1>
+            
+            <!-- Upload Form -->
+            <form id="upload_image" action="./" method="POST" enctype="multipart/form-data">
+                <div class="mb-3 row">
+                    <div class="col-auto">
+                        <input class="form-control" type="file" name="images" accept="image/*" multiple required>
+                    </div>
+                    <div class="col-auto">
+                        <select class="form-select" name="convert_to" required>
+                            <option value="jpg">jpg</option>
+                            <option value="jpeg">jpeg</option>
+                            <option value="png">png</option>
+                            <option value="webp">webp</option>
+                            <option value="svg">svg</option>
+                            <option value="avif">avif</option>
+                            <option value="tiff">tiff</option>
+                            <option value="ico">ico</option>
+                            <option value="bmp">bmp</option>
+                            <option value="gif">gif</option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" value="Upload" class="btn btn-primary mb-3">Upload Images</button>
+                    </div>
                 </div>
-                <div class="col-auto">
-                    <button type="submit" value="Upload" class="btn btn-primary mb-3">Upload afbeelding</button>
+            </form>
+
+            <!-- Display the converted images -->
+            {% if files %}
+                <div class="mt-4">
+                    <form action="./zip_download" method="POST">
+                        <button type="submit" class="btn btn-primary">Download All!</button>
+                    </form>
                 </div>
-            </div>
-        </form>
-        
-        <br>
-        {% if image_url %}
-            <div><a href="./download/{{ file_name }}">Download</a></div>
-            <br>
-            <h2>Uploaded Image:</h2>
-            <img src="{{ image_url }}" alt="Uploaded Image" style="width: 800px;height: auto">
-        {% endif %}
+                <h2>Converted Images:</h2>
+                <div class="row row-cols-3 row-cols-auto">
+                    {% for file in files %}
+                        <div class="col" style="max-width: 256px;">
+                            <div class="card text-center">
+                                <img src="{{ file.image_url }}" class="card-img-top" alt="Converted Image" style="width: 100%; height: auto; max-width: 256px;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Uploaded File: {{ file.original_filename }}</h5>
+                                    <p class="card-text">Original Content Type: {{ file.content_type }}</p>
+                                    <a href="./download/{{ file.png_filename }}" class="btn btn-success">Download {{ file.image_extension }}</a>
+                                    <button type="button" class="btn btn-secondary"
+                                            onclick="var full_path = window.location.origin + '/convert/download/{{ file.png_filename }}'; copyToClipboard(full_path, this);">
+                                            <i class="bi bi-clipboard" aria-hidden="true"></i> Copy Download URL
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- Download All as ZIP button -->
+            {% endif %}
+        </div>
+
         <!-- Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+        <script src="/static/file_converter.js"></script>
     </body>
 </html>
